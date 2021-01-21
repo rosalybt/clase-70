@@ -4847,7 +4847,6 @@ const artistasConMasDiscosQue = (array, cantidadDeDiscos) => {
 // console.log(artistasConMasDiscosQue(artistas, 9))
 
 const artistaConMasEntradasVendidas = (array) => {
-    // console.log(array.ultimoRecital)
 
     let mayorNumeroDeEntradas = array.map((artista) => {
         return artista.ultimoRecital.entradasVendidas
@@ -4880,8 +4879,8 @@ const artistasConDiscoEnAnio = (array, anio) => {
 // console.log(artistasConDiscoEnAnio(artistas, 2011))
 
 
-
-// Este me muestra la cantidad mas grande discos vendidos pero no quien es el artista
+// Este me muestra la cantidad mas grande discos vendidos,
+// pero no quien es el artista
 const artistaConMasCopias = (array) => {
 
     return array.map((artista) => {
