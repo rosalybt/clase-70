@@ -73,34 +73,7 @@
 //**********SEGUNDA PARTE DE LOS EJERCICIOS*************** */
 
 const artistas = [
-    {
-        nombre: "Rosaly Balbuena",
-        solista: true,
-        edad: 33,
-        instrumento: "batería",
-        paisNacimiento: "Mayotte",
-        ultimoRecital: {
-            pais: "Vatican City State (Holy See)",
-            anio: 2016,
-            entradasVendidas: 68197,
-            costoEntradas: 2987,
-        },
-        discos: [
-            {
-                titulo: "pariatur excepteur dolore",
-                canciones: 13,
-                anioLanzamiento: 1993,
-                copiasVendidas: 2000000,
-            },
-            {
-                titulo: "pariatur excepteur dolore",
-                canciones: 13,
-                anioLanzamiento: 1993,
-                copiasVendidas: 2000000,
-            },
-        ],
-        genero: "punk",
-    },
+
     {
         nombre: "Ochoa Chang",
         solista: true,
@@ -110,7 +83,7 @@ const artistas = [
         ultimoRecital: {
             pais: "Vatican City State (Holy See)",
             anio: 2016,
-            entradasVendidas: 68197,
+            entradasVendidas: 5000,
             costoEntradas: 2987,
         },
         discos: [
@@ -167,6 +140,34 @@ const artistas = [
                 canciones: 8,
                 anioLanzamiento: 2006,
                 copiasVendidas: 89143,
+            },
+        ],
+        genero: "punk",
+    },
+    {
+        nombre: "Rosaly Balbuena",
+        solista: true,
+        edad: 33,
+        instrumento: "batería",
+        paisNacimiento: "Mayotte",
+        ultimoRecital: {
+            pais: "Vatican City State (Holy See)",
+            anio: 2016,
+            entradasVendidas: 4000000,
+            costoEntradas: 2987,
+        },
+        discos: [
+            {
+                titulo: "pariatur excepteur dolore",
+                canciones: 13,
+                anioLanzamiento: 1993,
+                copiasVendidas: 2000000,
+            },
+            {
+                titulo: "pariatur excepteur dolore",
+                canciones: 13,
+                anioLanzamiento: 1993,
+                copiasVendidas: 2000000,
             },
         ],
         genero: "punk",
@@ -4848,26 +4849,30 @@ const artistasConMasDiscosQue = (array, cantidadDeDiscos) => {
 
 const artistaConMasEntradasVendidas = (array) => {
 
-    let mayorNumeroDeEntradas = array.map((artista) => {
-        return artista.ultimoRecital.entradasVendidas
-    }).reduce((acc, curr) => {
-        if (acc > curr) {
+    return array.reduce((acc, crr) => {
+        if (acc.ultimoRecital.entradasVendidas > crr.ultimoRecital.entradasVendidas) {
             return acc
-        } else { return curr }
-    })
-
-    return array.find((artista) => {
-        return artista.ultimoRecital.entradasVendidas === mayorNumeroDeEntradas
+        } else {
+            return crr
+        }
     })
 
 }
 // console.log(artistaConMasEntradasVendidas(artistas))
-const artistaConMayorRecaudacion = (array, callBack) => {
-    let ultimoRecitalArtista = callBack(array).ultimoRecital
 
-    return ultimoRecitalArtista.entradasVendidas * ultimoRecitalArtista.costoEntradas
+const artistaConMayorRecaudacion = (array) => {
+
+    return array.reduce((acc, crr) => {
+        const costoEntradas = crr.ultimoRecital.costoEntradas
+        const entradasVendidas = crr.ultimoRecital.entradasVendidas
+        if ((acc.ultimoRecital.entradasVendidas * acc.ultimoRecital.costoEntradas) > entradasVendidas * costoEntradas) {
+            return acc
+        } else {
+            return crr
+        }
+    })
 }
-// console.log(artistaConMayorRecaudacion(artistas, artistaConMasEntradasVendidas))
+// console.log(artistaConMayorRecaudacion(artistas))
 
 const artistasConDiscoEnAnio = (array, anio) => {
     return array.filter((artista) => {
@@ -4894,8 +4899,9 @@ const artistaConMasCopias = (array) => {
         else { return crr }
     })
 
+
 }
-// console.log(artistaConMasCopias(artistas))
+console.log(artistaConMasCopias(artistas))
 
 
 const cantidadDeArtistasPorInstrumento = (array) => {
@@ -4914,7 +4920,6 @@ const cantidadDeArtistasPorInstrumento = (array) => {
 
     }, {})
 }
-
 // console.log(cantidadDeArtistasPorInstrumento(artistas))
 
 const cantidadDeArtistasPorGenero = (array) => {
@@ -4929,5 +4934,4 @@ const cantidadDeArtistasPorGenero = (array) => {
         }
     }, {})
 }
-
 // console.log(cantidadDeArtistasPorGenero(artistas))
