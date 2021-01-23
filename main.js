@@ -4861,7 +4861,7 @@ const artistaConMasEntradasVendidas = (array) => {
     })
 
 }
-
+// console.log(artistaConMasEntradasVendidas(artistas))
 const artistaConMayorRecaudacion = (array, callBack) => {
     let ultimoRecitalArtista = callBack(array).ultimoRecital
 
@@ -4897,3 +4897,37 @@ const artistaConMasCopias = (array) => {
 }
 // console.log(artistaConMasCopias(artistas))
 
+
+const cantidadDeArtistasPorInstrumento = (array) => {
+
+    return array.reduce((acc, crr) => {
+        const instrumento = crr.instrumento
+        if (!acc[crr.instrumento]) {
+            propiedad = crr.instrumento
+            acc[propiedad] = 1
+            return acc
+
+        } else {
+            acc[propiedad] += 1
+            return acc
+        }
+
+    }, {})
+}
+
+// console.log(cantidadDeArtistasPorInstrumento(artistas))
+
+const cantidadDeArtistasPorGenero = (array) => {
+    return array.reduce((acc, curr) => {
+        const generoMusical = curr.genero
+        if (!acc[generoMusical]) {
+            acc[generoMusical] = 1
+            return acc
+        } else {
+            acc[generoMusical] += 1
+            return acc
+        }
+    }, {})
+}
+
+// console.log(cantidadDeArtistasPorGenero(artistas))
