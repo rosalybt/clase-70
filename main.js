@@ -84,7 +84,7 @@ const artistas = [
             pais: "Vatican City State (Holy See)",
             anio: 2016,
             entradasVendidas: 5000,
-            costoEntradas: 2987,
+            costoEntradas: 29870000,
         },
         discos: [
             {
@@ -153,21 +153,21 @@ const artistas = [
         ultimoRecital: {
             pais: "Vatican City State (Holy See)",
             anio: 2016,
-            entradasVendidas: 4000000,
-            costoEntradas: 2987,
+            entradasVendidas: 4000,
+            costoEntradas: 1,
         },
         discos: [
             {
                 titulo: "pariatur excepteur dolore",
                 canciones: 13,
                 anioLanzamiento: 1993,
-                copiasVendidas: 2000000,
+                copiasVendidas: 200,
             },
             {
                 titulo: "pariatur excepteur dolore",
                 canciones: 13,
                 anioLanzamiento: 1993,
-                copiasVendidas: 2000000,
+                copiasVendidas: 200,
             },
         ],
         genero: "punk",
@@ -4830,50 +4830,6 @@ const artistasPorEdad = (array, edad) => {
     })
 }
 
-const artistasConMasDiscosQue = (array, cantidadDeDiscos) => {
-    return array.filter((artista) => {
-        return artista.discos.length > cantidadDeDiscos
-    }).sort((a, b) => {
-        if (a.discos.length > b.discos.length) {
-            return -1;
-        }
-        else if (a.discos.length < b.discos.length) {
-            return 1;
-        } else {
-            return 0;
-        }
-
-    })
-}
-// console.log(artistasConMasDiscosQue(artistas, 9))
-
-const artistaConMasEntradasVendidas = (array) => {
-
-    return array.reduce((acc, crr) => {
-        if (acc.ultimoRecital.entradasVendidas > crr.ultimoRecital.entradasVendidas) {
-            return acc
-        } else {
-            return crr
-        }
-    })
-
-}
-// console.log(artistaConMasEntradasVendidas(artistas))
-
-const artistaConMayorRecaudacion = (array) => {
-
-    return array.reduce((acc, crr) => {
-        const costoEntradas = crr.ultimoRecital.costoEntradas
-        const entradasVendidas = crr.ultimoRecital.entradasVendidas
-        if ((acc.ultimoRecital.entradasVendidas * acc.ultimoRecital.costoEntradas) > entradasVendidas * costoEntradas) {
-            return acc
-        } else {
-            return crr
-        }
-    })
-}
-// console.log(artistaConMayorRecaudacion(artistas))
-
 const artistasConDiscoEnAnio = (array, anio) => {
     return array.filter((artista) => {
         return artista.discos.find((disco) => {
@@ -4884,54 +4840,63 @@ const artistasConDiscoEnAnio = (array, anio) => {
 // console.log(artistasConDiscoEnAnio(artistas, 2011))
 
 
-// Este me muestra la cantidad mas grande discos vendidos,
-// pero no quien es el artista
+const sumatoria = (array) => {
+    return array.reduce((acc, curr) => {
+        return acc + curr.copiasVendidas
+    }, 0)
+}
+
+
 const artistaConMasCopias = (array) => {
+    return array.reduce((acc, curr) => {
+        return sumatoria(curr.discos) > sumatoria(acc.discos) ? curr : acc
+    })
+}
 
-    return array.map((artista) => {
+// console.log(artistaConMasCopias(artistas))
 
-        return artista.discos.reduce((acc, crr) => {
-            return (acc + crr.copiasVendidas)
-        }, 0)
+const artistaConMasDiscosQue = (cantidadDiscos, array) => {
+    return array.filter(artista => artista.discos.length >= cantidadDiscos)
+}
+// console.log(artistaConMasDiscosQue(10, artistas))
 
-    }).reduce((acc, crr) => {
-        if (acc > crr) { return acc }
-        else { return crr }
+const masEntradas = (array) => {
+    return array.reduce((acc, curr) => {
+
+        return curr.ultimoRecital.entradasVendidas > acc.ultimoRecital.entradasVendidas ? curr : acc
+
+    })
+}
+
+const masRecaudo = (array) => {
+    return array.reduce((acc, curr) => {
+        let recaudacionAcc = acc.ultimoRecital.entradasVendidas * acc.ultimoRecital.costoEntradas
+        let RecaudacionCurr = curr.ultimoRecital.entradasVendidas * curr.ultimoRecital.costoEntradas
+
+        return RecaudacionCurr > recaudacionAcc ? curr : acc
     })
 
-
 }
-console.log(artistaConMasCopias(artistas))
 
-
-const cantidadDeArtistasPorInstrumento = (array) => {
-
-    return array.reduce((acc, crr) => {
-        const instrumento = crr.instrumento
-        if (!acc[crr.instrumento]) {
-            propiedad = crr.instrumento
-            acc[propiedad] = 1
-            return acc
-
-        } else {
-            acc[propiedad] += 1
-            return acc
-        }
-
-    }, {})
-}
-// console.log(cantidadDeArtistasPorInstrumento(artistas))
-
-const cantidadDeArtistasPorGenero = (array) => {
+const CantidadArtistasPOrInstrumento = (array) => {
     return array.reduce((acc, curr) => {
-        const generoMusical = curr.genero
-        if (!acc[generoMusical]) {
-            acc[generoMusical] = 1
-            return acc
-        } else {
-            acc[generoMusical] += 1
-            return acc
-        }
+        let instru = curr.instrumento
+        acc[instru] ? acc[instru] += 1 : acc[instru] = 1
+        return acc
     }, {})
 }
+
+const CantidadArtistaPorGenero = (array) => {
+
+    return array.reduce((acc, { genero }) => {
+        acc[genero] ? acc[genero] += 1 : acc[genero] = 1
+        return acc
+    }, {})
+}
+
+// console.log(CantidadArtistaPorGenero(artistas))
+// console.log(masEntradas(artistas))
+// console.log(masRecaudo(artistas))
+// console.log(CantidadArtistasPOrInstrumento(artistas))
+
 // console.log(cantidadDeArtistasPorGenero(artistas))
